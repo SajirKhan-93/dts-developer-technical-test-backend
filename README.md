@@ -1,6 +1,6 @@
 # HMCTS Task Manager - Backend (HapiJS)
 
-A Node.js/HapiJS REST API for caseworker tasks, written in the same style as `pafs-backend-api`: Hapi plugins per feature, Joi validation, Prisma over PostgreSQL, convict config, pino logging, hapi-swagger docs, Vitest tests.
+A Node.js/HapiJS REST API for caseworker tasks: Hapi plugins per feature, Joi validation, Prisma over PostgreSQL, convict config, pino logging, hapi-swagger docs, Vitest tests.
 
 Runs on **http://localhost:3001**.
 
@@ -121,7 +121,7 @@ curl.exe -X POST http://localhost:3001/api/v1/tasks -H "Content-Type: applicatio
 
 ### Errors
 
-Same two shapes as PAFS. Validation failures return every problem at once, with the Joi message as an error code:
+Errors come in two shapes. Validation failures return every problem at once, with the Joi message as an error code:
 
 ```json
 {
@@ -150,7 +150,7 @@ Everything else (not found, malformed JSON, unknown route, unexpected failure):
 | `409`  | The title is already used by another task                      |
 | `500`  | Unexpected failure (details are logged, never returned)        |
 
-## Where things are (PAFS layout)
+## Where things are
 
 ```
 src/index.js, server.js, config.js, config/*.js   entry, Hapi server, convict schemas
@@ -178,4 +178,4 @@ npm run format:check
 
 Route tests run the real Hapi lifecycle against an in-memory stand-in for Prisma (`src/common/test-helpers/fake-prisma.js`).
 
-Tests sit next to the file they test, as in PAFS: one `*.test.js` per route handler (`create-task.test.js`, ...), the service, schemas, helpers, the Prisma plugin, the migration runner, `server.js`, `start-server.js` and so on. `tasks-routes.test.js` is the end-to-end test of the routes through Hapi.
+Tests sit next to the file they test: one `*.test.js` per route handler (`create-task.test.js`, ...), the service, schemas, helpers, the Prisma plugin, the migration runner, `server.js`, `start-server.js` and so on. `tasks-routes.test.js` is the end-to-end test of the routes through Hapi.
