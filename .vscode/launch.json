@@ -1,0 +1,55 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend: run (port 3001)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/index.js",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "3001",
+        "DB_HOST": "127.0.0.1",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "hmcts_database",
+        "DB_USERNAME": "postgres",
+        "DB_PASSWORD": "123456789",
+        "DB_MIGRATE_ON_START": "true",
+        "LOG_LEVEL": "info"
+      }
+    },
+    {
+      "name": "Backend: apply database changelog",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/plugins/database/helpers/migrate.js",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "DB_HOST": "127.0.0.1",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "hmcts_database",
+        "DB_USERNAME": "postgres",
+        "DB_PASSWORD": "123456789"
+      }
+    },
+    {
+      "name": "Backend: run tests",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/vitest/vitest.mjs",
+      "args": ["run"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "NODE_ENV": "test",
+        "TZ": "UTC"
+      }
+    }
+  ]
+}

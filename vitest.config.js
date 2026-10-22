@@ -1,0 +1,21 @@
+import { defineConfig, configDefaults } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'node',
+    clearMocks: true,
+    coverage: {
+      provider: 'v8',
+      reportsDirectory: './coverage',
+      reporter: ['text', 'lcov'],
+      include: ['src/**'],
+      exclude: [
+        ...configDefaults.exclude,
+        'coverage',
+        'src/common/test-helpers/**',
+        '**/*.test.js'
+      ]
+    }
+  }
+})

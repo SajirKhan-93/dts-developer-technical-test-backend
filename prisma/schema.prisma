@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Created by changelog/1-001-tasks.sql (the schema is owned by the changelog, Prisma only queries it).
+/// changelog/1-002 adds a unique index on LOWER(title), which Prisma cannot model.
+model tasks {
+  id            BigInt   @id @default(autoincrement())
+  title         String   @db.VarChar(255)
+  description   String?  @db.VarChar(2000)
+  status        String   @db.VarChar(20)
+  due_date_time DateTime @db.Timestamp(6)
+  created_at    DateTime @default(dbgenerated("timezone('utc'::text, now())")) @db.Timestamp(6)
+
+  @@index([due_date_time], map: "idx_tasks_due_date_time")
+  @@index([created_at(sort: Desc), id(sort: Desc)], map: "idx_tasks_created_at")
+}
